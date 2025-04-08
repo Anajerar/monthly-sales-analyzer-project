@@ -24,30 +24,58 @@ sales_data = [
 
 def total_sales_by_product(data, product_key):
     """Calculates the total sales of a specific product in 30 days."""
-    pass
-
+    total_sales=0
+    for product in data:
+        total_sales= total_sales+ product[product_key]
+    return total_sales
 
 def average_daily_sales(data, product_key):
     """Calculates the average daily sales of a specific product."""
-    pass
+    total_sales=0
+    total_records = len(data)
+    for product in data:
+        total_sales= total_sales+ product[product_key]
+    return total_sales/total_records
+    
 
 
 def best_selling_day(data):
     """Finds the day with the highest total sales."""
-    pass
+    top_daily_sales= 0
+    top_day=0
+    for day in data:
+        daily_sales= day['product_a'] + day['product_b'] + day['product_c']
+        if daily_sales > top_daily_sales: 
+            top_daily_sales=daily_sales
+            top_day=day['day']
+    return top_day
+    
 
 
 def days_above_threshold(data, product_key, threshold):
     """Counts how many days the sales of a product exceeded a given threshold."""
-    pass
+    days_count=0
+    for day in data:
+        if day[product_key]>threshold:
+            days_count +=  1
+    return days_count
 
 
 def top_product(data):
     """Determines which product had the highest total sales in 30 days."""
-    pass
-
-
-
+    product_a_sales = 0
+    product_b_sales = 0
+    product_c_sales = 0
+    for sales in data:
+        product_a_sales += sales['product_a']
+        product_b_sales += sales['product_b']
+        product_c_sales += sales['product_c']
+    product_sales = [{'product':'product_a','sales':product_a_sales},
+                     {'product':'product_b','sales':product_b_sales},
+                     {'product':'product_c','sales':product_c_sales}]
+    top_seller = max(product_sales, key=lambda s: s['sales'])
+    return top_seller['product']
+    
 # Function tests
 print("Total sales of product_a:", total_sales_by_product(sales_data, "product_a"))
 print("Average daily sales of product_b:", average_daily_sales(sales_data, "product_b"))
